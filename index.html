@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Finder</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>📄 PDF Keyword Finder</h2>
+
+    <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+        <input type="file" name="pdf" required>
+        <input type="text" name="keyword" placeholder="Enter name or word" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="loader">🔍 Searching...</div>
+
+    {% if keyword %}
+        <h3>Results for "{{ keyword }}"</h3>
+    {% endif %}
+
+    {% for item in results %}
+        <div class="result-box">
+            <strong>#{{ loop.index }}</strong><br>
+            📄 Page: {{ item.page }}<br>
+            📝 {{ item.text }}
+        </div>
+    {% endfor %}
+
+    {% if keyword and results|length == 0 %}
+        <p>No result found ❌</p>
+    {% endif %}
+</div>
+
+<script>
+function showLoader(){
+    document.getElementById("loader").style.display = "block";
+}
+</script>
+
+</body>
+</html>
